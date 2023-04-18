@@ -1,0 +1,159 @@
+{% extends "base.html" %}
+{% load static %}
+{% block content %}
+<style>
+    .container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+  background-color: #f5f5f5;
+}
+
+.card-content {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  background-color: #fff;
+  box-shadow: 0px 0px 5px rgba(0, 0, 0, 0.1);
+  padding: 20px;
+  border-radius: 10px;
+}
+
+.card-image img {
+  border-radius: 50%;
+}
+
+.form-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 100%;
+  margin-top: 20px;
+}
+
+form {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 100%;
+}
+
+label {
+  font-size: 16px;
+  font-weight: bold;
+  margin-bottom: 10px;
+  color: #555;
+}
+
+input[type="text"],
+input[type="password"],
+input[type="email"],
+input[type="file"] {
+  width: 100%;
+  padding: 10px;
+  border-radius: 5px;
+  border: 1px solid #ccc;
+  margin-bottom: 20px;
+}
+
+.input-error {
+  font-size: 14px;
+  color: red;
+  margin-bottom: 10px;
+}
+
+.input-invalid {
+  border-color: red;
+}
+
+a {
+  color: #555;
+  font-size: 14px;
+  margin-top: 10px;
+}
+
+input[type="submit"] {
+  background-color: #555;
+  color: #fff;
+  padding: 10px 20px;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+input[type="submit"]:hover {
+  background-color: #333;
+}
+</style>
+<div class="card">
+    <h2>Signup</h2>
+    <div>
+      {% if message %}
+      <p>{{message}}</p>
+      {% endif %}
+    </div>
+    <form method="post">
+      {% csrf_token %}
+      
+      <div>
+        <input type="text" placeholder="Mobile number" name="mobile">
+      </div>
+      
+      <div>
+        <input type="text" placeholder="Name" name="first_name">
+      </div>
+      <div>
+        <input type="text" placeholder="Alt Mobile number" name="alt_mobile">
+      </div>
+      <div>
+        <input type="email" placeholder="Email" name="email">
+      </div>
+      <div>
+        <input type="password" placeholder="Password" name="password">
+      </div>
+      <div>
+        <input type="password" placeholder="Re-enter Password" name="cpassword">
+      </div>
+      <div>
+        <input type="text" placeholder="Car company" name="car_company">
+      </div>
+      <div >
+        <label for="inputAddress2" class="form-label">Address </label>
+        <input type="text" class="form-control" id="inputAddress2" placeholder="Apartment, studio, or floor" name="Address">
+      </div>
+      <div >
+        <label for="inputCity" class="form-label">City</label>
+        <input type="text" class="form-control" id="inputCity">
+      </div>
+      <div >
+        <label for="inputState" class="form-label">State</label>
+        <select id="inputState" class="form-select">
+          <option selected>Choose...</option>
+          <option>Ap</option>
+          <option>Telenagana</option>
+        </select>
+      </div>
+      <div >
+        <label for="inputZip" class="form-label">PinCode</label>
+        <input type="text" class="form-control" id="inputZip">
+      </div>
+      <div>
+        <label for="image" >Upload Profile Photo</label><br>
+        <input type="file" id="image" placeholder="Image" name="image">
+      </div>
+      <div>
+        <label for="image" >Upload Shop Photo</label><br>
+        <input type="file" id="image" placeholder="Image" name="shop_image">
+      </div>
+      
+      <div>
+        <a href="{% url 'login' %}"><p>Already a user? Login here!</p></a>
+      </div>
+      
+      <div>
+        <input type="submit" value="signup">
+      </div>
+    </form>
+  </div>
+{% endblock content %}

@@ -1,0 +1,41 @@
+<body>
+  <form action="{% url "srequest" %}" method="post">
+    {% csrf_token %}
+  <input type="text" id="latitude" name="lat" hidden>
+  <input type="text" id="longitude" name="log" hidden>
+  <input type="text" id="location" name="Address">
+  <input type="button" onclick="getLocation()" value="Get Address">
+  <input type="text" name="car_company" placeholder="Enter car company">
+  <input type="number" name="mobile" placeholder="Mobile Number">
+  <button type="submit">Request for a mechanic</button>
+</form>
+
+  
+
+  <script>
+    function getLocation() {
+      var latitudeElement = document.getElementById("latitude");
+      var longitudeElement = document.getElementById("longitude");
+      var locationElement = document.getElementById("location");
+      var mapsLink = document.getElementById("maps-link");
+      if ("geolocation" in navigator) {
+        navigator.geolocation.getCurrentPosition(function(position) {
+          var latitude = position.coords.latitude;
+          var longitude = position.coords.longitude;
+          latitudeElement.value = latitude;
+          longitudeElement.value = longitude;
+          var url = "https://nominatim.openstreetmap.org/reverse?format=jsonv2&lat=" + latitude + "&lon=" + longitude;
+          fetch(url)
+            .then(response => response.json())
+            .then(data => {
+              locationElement.value = data.display_name;
+              mapsLink.href = "https://www.google.com/maps/search/?api=1&query=" + latitude + "," + longitude;
+            })
+            .catch(error => console.error(error));
+        });
+      } else {
+        alert("Geolocation is not supported by this browser.");
+      }
+    }
+  </script>
+</body>

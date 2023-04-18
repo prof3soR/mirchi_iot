@@ -1,0 +1,28 @@
+{% extends "base.html" %}
+{% block content %}
+{% if message %}
+<center>
+  {{message}}<br>
+<a href="{% url "srequest" %}">Place a new servive request</a>
+{% endif %}
+</center>
+
+<div>
+
+    {% for near_mech in near_mechs %}
+    <div class="card" style="width: 18rem;">
+        <img src="{{near_mech.dp.url}}" class="card-img-top" alt="{{near_mech.name}}">
+        <div class="card-body">
+          <h5 class="card-title">{{near_mech.user.first_name}}</h5>
+          <p class="card-text">{{near_mech.user.username}}</p>
+          <p class="card-text">{{near_mech.alt_mobile}}</p>
+          <p class="card-text">{{near_mech.address}}</p>
+        </div>
+        <form method="post">
+          <input type="number" value="near_mech.id" hidden name="mech_id">
+          <input class="btn btn-primary" value="Place a request" type="submit"> 
+        </form>
+      </div>
+      {% endfor %}
+</div>
+{% endblock %}
