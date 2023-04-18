@@ -1,0 +1,82 @@
+<html>
+<head>
+  <title>service_request</title>
+  <style>
+     .get-details{
+    width: 570px;
+    margin: 0 auto;
+    padding: 20px;
+    color: black;
+    border-radius: 10px;
+    box-shadow: 0 0 10px rgba(0,0,0,0.3);
+    margin-top: 9%;
+    background-color: azure;
+  }
+     .get-details input[type="text"],input[type="number"]{
+      width: 90%;
+      padding: 10px;
+      margin-bottom: 10px;
+      border: black;
+      border-radius: 5px;
+      font-size: 15px;
+      background-color: rgb(201, 245, 247);
+      color: black;
+  }
+  .get-details button[type="submit"],input[type="button"],input[type="textarea"] {
+    width: 50%;
+    padding: 10px;
+    border: none;
+    border-radius: 5px;
+    background-color: #1c8fc0;
+    color: #fff;
+    cursor: pointer;
+    font-size: 15px;
+  }
+  </style>
+</head>
+<body>
+  <div class="get-details">
+  <form action="{% url "srequest" %}" method="post">
+    {% csrf_token %}
+    <center>
+  <input type="text" id="latitude" name="lat" hidden>
+  <input type="text" id="longitude" name="log" hidden>
+  <input type="text" id="location" name="Address">
+  <input type="button" onclick="getLocation()" value="Get Address"><br><br>
+  <input type="text" name="car_company" placeholder="Enter car company"><br><br>
+  <input type="number" name="mobile" placeholder="Mobile Number"><br><br>
+  <input type="textarea" name="desc" placeholder="Description ( write about your situation and what service you need  )"><br><br>
+  <button type="submit">Request for a mechanic</button>
+  </center>
+</form>
+</div>
+
+  
+
+  <script>
+    function getLocation() {
+      var latitudeElement = document.getElementById("latitude");
+      var longitudeElement = document.getElementById("longitude");
+      var locationElement = document.getElementById("location");
+      var mapsLink = document.getElementById("maps-link");
+      if ("geolocation" in navigator) {
+        navigator.geolocation.getCurrentPosition(function(position) {
+          var latitude = position.coords.latitude;
+          var longitude = position.coords.longitude;
+          latitudeElement.value = latitude;
+          longitudeElement.value = longitude;
+          var url = "https://nominatim.openstreetmap.org/reverse?format=jsonv2&lat=" + latitude + "&lon=" + longitude;
+          fetch(url)
+            .then(response => response.json())
+            .then(data => {
+              locationElement.value = data.display_name;
+              mapsLink.href = "https://www.google.com/maps/search/?api=1&query=" + latitude + "," + longitude;
+            })
+            .catch(error => console.error(error));
+        });
+      } else {
+        alert("Geolocation is not supported by this browser.");
+      }
+    }
+  </script>
+</body>

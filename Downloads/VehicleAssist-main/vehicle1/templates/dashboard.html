@@ -1,0 +1,136 @@
+{% extends "base.html" %}
+{% block content %}
+{% if message %}
+<style>
+  /* set background color to blue */
+body {
+  align-items: center;
+  margin: 50px;
+  background-color: #5dade2;
+}
+
+/* center the message and new service request link */
+.center {
+  text-align: center;
+  color: #fff;
+  margin-top: 20px;
+  margin-bottom: 30px;
+  font-size: 24px;
+}
+
+.center a {
+  color: #fff;
+  text-decoration: none;
+  font-size: 20px;
+  padding: 10px;
+  background-color: #5dade2;
+  border-radius: 5px;
+}
+
+.center a:hover {
+  background-color: #2980b9;
+}
+
+/* style the mechanic cards */
+.card {
+  display: inline-block;
+  text-align: center;
+  width: 260px;
+  position: relative;
+  max-width: 500px;
+  margin: 20px;
+  border-radius: 10px;
+  overflow: hidden;
+  box-shadow: 0 0 20px rgba(0, 0, 0, 0.1);
+  background: #f8f8fa;
+}
+
+.card img {
+  width: 100%;
+  height: 200px;
+  object-fit: cover;
+}
+
+.card-header {
+  color: black;
+  background-color: #fff;
+  padding: 10px;
+}
+
+.card-title {
+  font-size: 24px;
+  margin: 0;
+}
+
+.card-body {
+  padding: 10px;
+}
+
+.card-text {
+  font-size: 16px;
+  margin: 5px 0;
+  color: black;
+}
+
+input[type="number"] {
+  display: none;
+}
+
+.btn {
+  background-color: #5dade2;
+  border: none;
+  color: #fff;
+  padding: 10px;
+  border-radius: 5px;
+  font-size: 16px;
+  margin-top: 10px;
+  cursor: pointer;
+}
+
+.btn:hover {
+  background-color: #2980b9;
+}
+
+</style>
+<body>
+<center>
+  {{message}}<br>
+<a href="{% url "srequest" %}">Place a new servive request</a>
+{% endif %}
+</center>
+
+<div>
+<h1></h1>
+    {% for near_mech in near_mechs %}
+    <div class="card"
+     style="width: 16rem;
+    display: inline-block; 
+    text-align: center;
+    width: 260px;  
+    position: relative;
+    max-width: 500px;
+    margin: 0 auto;
+    border-radius: 10px;
+    overflow: hidden;
+    box-shadow: 0 0 20px rgba(0, 0, 0, 0.1);
+    background: #f8f8fa;">
+        <img src="{{near_mech.dp.url}}" class="card-img-top" alt="{{near_mech.name}}">
+        <div class="card-header" style="color: black;">
+          <h5 class="card-title" style="color: black;">{{near_mech.user.first_name}}</h5>
+        </div>
+        <div class="card-body">
+          <!--<h5 class="card-title" style="color: black;">{{near_mech.user.first_name}}</h5>-->
+          <p class="card-text" style="color: black;">{{near_mech.user.username}}</p>
+          <p class="card-text" style="color: black;">{{near_mech.alt_mobile}}</p>
+          <p class="card-text" style="color: black;">{{near_mech.address}}</p>
+        </div>
+        <form method="post" action="{% url "request_mechanic" %}">
+          {% csrf_token %}
+          <input type="number" value="{{near_mech.id}}" hidden name="mech_id">
+          <input class="btn btn-primary" value="Place a request" type="submit"> 
+        </form>
+      </div>
+      {% endfor %}
+</div>
+</body>
+{% endblock %}

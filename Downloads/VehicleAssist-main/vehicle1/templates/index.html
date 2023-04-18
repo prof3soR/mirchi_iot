@@ -1,0 +1,51 @@
+<html>
+    <head>
+        <title>Homepage</title>
+        <style>
+            *{
+                margin: 0;
+                padding: 0;
+            }
+            body{
+                background-image: url('https://log24.pl/wp-content/uploads/2020/09/shutterstock_1360089488-1.jpg');
+                background-repeat: no-repeat;
+                background-size: cover;
+            }
+            h1{
+                text-align: left;
+                font-size: 65px;
+                font-family:'Times New Roman', Times, serif;
+                position: absolute;
+                top: 32%;
+                left: 13%;
+            }
+            ul{
+                list-style-type: none;
+                float: center;
+                margin-top: 10px;
+            }
+            ul li{
+                list-style: none;
+                display: inline-block;
+                margin: 0 20px;
+            }
+            ul li a{
+                text-decoration: none;
+                color: rgb(41, 6, 122);
+                text-transform: uppercase;
+                font-size: 22px;
+            }
+        </style>
+    </head>
+    <body>
+        <header>
+                <ul>
+                    <li><a href="{% url "login_view" %}">Login</a></li>
+                    <li><a href="{% url "signup" %}" >signup</a></li>
+                    <li><a href="{% url "m_signup" %}">Join Us</a></li>
+                </ul>
+                <h1 style="color: rgb(13, 4, 81);">&nbsp&nbsp&nbspVEHICLE</br> ASSISTANCE</h1>
+        </header>
+    </body>
+</html> 
+
